@@ -13,12 +13,11 @@ class App3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'App 2',
+      title: 'App 3',
       home: MacGuffinsListPage(50),
     );
   }
 }
-
 
 class MacGuffinsListPage extends StatefulWidget {
   final int numMacGuffins;
@@ -38,26 +37,23 @@ class _MacGuffinsListPageState extends State<MacGuffinsListPage> {
 
     // In a real app, this data would be fetched from a database or API
     data = List.generate(widget.numMacGuffins,
-      (index) => MacGuffin(name: 'MacGuffin ${index + 1}')
-    );
+        (index) => MacGuffin(name: 'MacGuffin ${index + 1}'));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('MacGuffins')),
-      body: ListView.builder(
-        itemCount: data.length, 
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(data[index].name),
-            onTap: () {
-              _editMacGuffin(context, index);
-            },
-          );
-        }
-      )
-    );
+        appBar: AppBar(title: const Text('MacGuffins')),
+        body: ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(data[index].name),
+                onTap: () {
+                  _editMacGuffin(context, index);
+                },
+              );
+            }));
   }
 
   Future<void> _editMacGuffin(BuildContext context, int index) async {
@@ -65,11 +61,9 @@ class _MacGuffinsListPageState extends State<MacGuffinsListPage> {
     // navigation stack, at which point it returns the value passed to
     // `Navigator.pop` (if any)
     var result = await Navigator.of(context).push(
-      MaterialPageRoute<MacGuffin>(
-        builder: (context) {
-          return MacGuffinEditPage(data[index]);
-        }
-      ),
+      MaterialPageRoute<MacGuffin>(builder: (context) {
+        return MacGuffinEditPage(data[index]);
+      }),
     );
 
     // Check that this state object is still associated with a mounted widget
@@ -85,7 +79,6 @@ class _MacGuffinsListPageState extends State<MacGuffinsListPage> {
     }
   }
 }
-
 
 class MacGuffinEditPage extends StatefulWidget {
   final MacGuffin macguffin;
@@ -109,38 +102,37 @@ class _MacGuffinEditPageState extends State<MacGuffinEditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit MacGuffin')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: TextFormField(
-                initialValue: editedMacGuffin.name,
-                decoration: const InputDecoration(hintText: 'Name'),
-                onChanged: (value) => editedMacGuffin.name = value,
+        appBar: AppBar(title: const Text('Edit MacGuffin')),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: TextFormField(
+                  initialValue: editedMacGuffin.name,
+                  decoration: const InputDecoration(hintText: 'Name'),
+                  onChanged: (value) => editedMacGuffin.name = value,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: TextFormField(
-                initialValue: editedMacGuffin.description,
-                decoration: const InputDecoration(hintText: 'Description'),
-                onChanged: (value) => editedMacGuffin.description = value,
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: TextFormField(
+                  initialValue: editedMacGuffin.description,
+                  decoration: const InputDecoration(hintText: 'Description'),
+                  onChanged: (value) => editedMacGuffin.description = value,
+                ),
               ),
-            ),
-            TextButton(
-              child: const Text('Save'),
-              onPressed: () {
-                // Pop the current screen off the navigation stack, and pass
-                // the new name back to the previous screen
-                Navigator.of(context).pop(editedMacGuffin);
-              },
-            ),
-          ],
-        ),
-      )
-    );
+              TextButton(
+                child: const Text('Save'),
+                onPressed: () {
+                  // Pop the current screen off the navigation stack, and pass
+                  // the new name back to the previous screen
+                  Navigator.of(context).pop(editedMacGuffin);
+                },
+              ),
+            ],
+          ),
+        ));
   }
 }
